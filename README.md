@@ -35,7 +35,7 @@ API
    "phone": "+420123456789"
    }'`
 
-Response: 200 OK, 400 Error
+    Response: 200 OK, 400 Error
 
 * Check for credit (POST /api/credit/check)
 
@@ -46,7 +46,7 @@ Response: 200 OK, 400 Error
 "amount": 2000
 }'`
 
-Response: true/false
+    Response: true/false
 
 * Approve Credit (POST /api/credit)
 
@@ -63,4 +63,4 @@ Creates a new credit. The credit data is stored in var/credits.json.
 "endDate": "2026-09-03T18:12:00+03:00"
 }'`
 
-Response: 201 Created, 400 Error
+    Response: 201 Created, 400 Error
