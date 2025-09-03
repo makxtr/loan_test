@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Modificator;
 
-use App\Application\Rule\Modificator;
 use App\Domain\Enum\RegionEnum;
 use App\Domain\Model\Client;
 use App\Domain\Model\Credit;

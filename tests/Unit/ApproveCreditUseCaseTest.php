@@ -10,6 +10,7 @@ use App\Application\Rule\Modificator;
 use App\Application\Rule\RuleChecker;
 use App\Application\UseCase\ApproveCreditUseCase;
 use App\Application\UseCase\CreateClientUseCase;
+use App\Domain\Enum\CreditStatusEnum;
 use App\Domain\Enum\RegionEnum;
 use App\Domain\Factory\ClientFactory;
 use App\Domain\Factory\CreditFactory;
@@ -37,7 +38,7 @@ class ApproveCreditUseCaseTest extends TestCase
         $this->creditStorageFile = sys_get_temp_dir() . '/credits_test_' . uniqid() . '.json';
         $this->clientFactory = new ClientFactory();
         $this->clientRepository = new JsonClientRepository($this->clientStorageFile, $this->clientFactory);
-        $this->creditRepository = new JsonCreditRepository($this->creditStorageFile);
+        $this->creditRepository = new JsonCreditRepository($this->creditStorageFile, new CreditFactory());
         $createClientUseCase = new CreateClientUseCase($this->clientRepository, $this->clientFactory);
 
         $rules = [
@@ -96,7 +97,7 @@ class ApproveCreditUseCaseTest extends TestCase
 
         $this->notificationService->expects($this->once())
             ->method('notifyClient')
-            ->with($this->anything(), 'approved');
+            ->with($this->anything(), CreditStatusEnum::APPROVED->value);
 
         $result = $this->useCase->execute($dto);
 
@@ -140,7 +141,7 @@ class ApproveCreditUseCaseTest extends TestCase
 
         $this->notificationService->expects($this->once())
             ->method('notifyClient')
-            ->with($this->anything(), 'approved');
+            ->with($this->anything(), CreditStatusEnum::APPROVED->value);
 
         $result = $this->useCase->execute($dto);
 
@@ -206,7 +207,7 @@ class ApproveCreditUseCaseTest extends TestCase
 
         $this->notificationService->expects($this->once())
             ->method('notifyClient')
-            ->with($this->anything(), 'rejected');
+            ->with($this->anything(), CreditStatusEnum::REJECTED->value);
 
         $result = $this->useCase->execute($dto);
 
@@ -235,14 +236,14 @@ class ApproveCreditUseCaseTest extends TestCase
 
         $dto = new ApproveCreditDTO(
             pin: '987-65-4321',
-            amount: 2000,
+            amount: 2001,
             startDate: $startDate,
             endDate: $endDate
         );
 
         $this->notificationService->expects($this->once())
             ->method('notifyClient')
-            ->with($this->anything(), 'rejected');
+            ->with($this->anything(), CreditStatusEnum::REJECTED->value);
 
         $result = $this->useCase->execute($dto);
 

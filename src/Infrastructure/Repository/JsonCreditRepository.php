@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository;
 
+use App\Domain\Factory\CreditFactory;
 use App\Domain\Model\Credit;
 use App\Domain\Repository\CreditRepositoryInterface;
 
@@ -13,7 +14,9 @@ class JsonCreditRepository implements CreditRepositoryInterface
     private string $storageFile;
 
     public function __construct(
-        string $storageFile = 'var/credits.json'
+        string $storageFile = 'var/credits.json',
+        private readonly CreditFactory $creditFactory
+
     ) {
         $this->storageFile = $storageFile;
         $this->loadCredits();
@@ -36,15 +39,7 @@ class JsonCreditRepository implements CreditRepositoryInterface
             $data = json_decode(file_get_contents($this->storageFile), true);
             if (is_array($data)) {
                 foreach ($data as $creditData) {
-                    $this->credits[$creditData['id']] = new Credit(
-                        id: $creditData['id'],
-                        name: $creditData['name'],
-                        amount: $creditData['amount'],
-                        rate: $creditData['rate'],
-                        startDate: new \DateTimeImmutable($creditData['startDate']),
-                        endDate: new \DateTimeImmutable($creditData['endDate']),
-                        clientPin: $creditData['clientPin']
-                    );
+                    $this->credits[$creditData['id']] = $this->creditFactory->createCreditFromArray($creditData);
                 }
             }
         }

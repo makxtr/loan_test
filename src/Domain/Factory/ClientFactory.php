@@ -23,9 +23,9 @@ class ClientFactory
         );
     }
 
-    public function createDTOFromArray(array $data): ClientDTO
+    public function createFromArray(array $data): Client
     {
-        return new ClientDTO(
+        return new Client(
             name: $data['name'],
             age: (int) $data['age'],
             region: $data['region'],

@@ -7,6 +7,7 @@ namespace App\Application\UseCase;
 use App\Application\DTO\ApproveCreditDTO;
 use App\Application\Rule\Modificator;
 use App\Application\Rule\RuleChecker;
+use App\Domain\Enum\CreditStatusEnum;
 use App\Domain\Factory\CreditFactory;
 use App\Domain\Repository\ClientRepositoryInterface;
 use App\Domain\Repository\CreditRepositoryInterface;
@@ -35,19 +36,19 @@ readonly class ApproveCreditUseCase
 
         $checkResult = $this->ruleChecker->check($client);
         if (!$checkResult) {
-            $this->notificationService->notifyClient($client, 'rejected');
+            $this->notificationService->notifyClient($client, CreditStatusEnum::REJECTED->value);
             return [
                 'success' => false,
                 'message' => 'Rejected'
             ];
         }
 
-        $credit = $this->creditFactory->createCredit($dto);
+        $credit = $this->creditFactory->createApprovedCredit($dto);
 
         $this->modificator->apply($client, $credit);
 
         $this->creditRepository->add($credit);
-        $this->notificationService->notifyClient($client, 'approved');
+        $this->notificationService->notifyClient($client, CreditStatusEnum::APPROVED->value);
         return [
             'success' => true,
             'message' => 'Credit approved successfully',

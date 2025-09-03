@@ -38,8 +38,7 @@ class JsonClientRepository implements ClientRepositoryInterface
             $data = json_decode(file_get_contents($this->storageFile), true);
             if (is_array($data)) {
                 foreach ($data as $clientData) {
-                    $dto = $this->clientFactory->createDTOFromArray($clientData);
-                    $this->clients[$clientData['pin']] = $this->clientFactory->createFromDTO($dto);
+                    $this->clients[$clientData['pin']] = $this->clientFactory->createFromArray($clientData);
                 }
             }
         }
