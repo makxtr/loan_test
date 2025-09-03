@@ -16,5 +16,42 @@ services:
     App\:
         resource: '../src/'
 
+
+    App\UI\API\:
+        resource: '../src/UI/API/'
+        tags: [ 'controller.service_arguments' ]
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Infrastructure\Repository\JsonClientRepository:
+        arguments:
+            $storageFile: '%kernel.project_dir%/var/clients.json'
+
+    App\Infrastructure\Repository\JsonCreditRepository:
+        arguments:
+            $storageFile: '%kernel.project_dir%/var/credits.json'
+
+    App\Domain\Repository\ClientRepositoryInterface:
+        alias: App\Infrastructure\Repository\JsonClientRepository
+
+    App\Domain\Repository\CreditRepositoryInterface:
+        alias: App\Infrastructure\Repository\JsonCreditRepository
+
+    App\Domain\Factory\ClientFactory: ~
+    App\Application\UseCase\CreateClientUseCase: ~
+
+    _instanceof:
+        App\Domain\Rule\RuleInterface:
+            tags: ['app.rule']
+        App\Domain\Modificator\ModificatorInterface:
+            tags: [ 'app.modificator' ]
+
+    App\Application\Rule\RuleChecker:
+        arguments:
+            $rules: !tagged_iterator app.rule
+
+    App\Application\Rule\Modificator:
+        arguments:
+            $modificators: !tagged_iterator app.modificator
+
