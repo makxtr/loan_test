@@ -6,8 +6,6 @@ namespace Unit;
 
 use App\Application\DTO\ApproveCreditDTO;
 use App\Application\DTO\ClientDTO;
-use App\Application\Rule\Modificator;
-use App\Application\Rule\RuleChecker;
 use App\Application\UseCase\ApproveCreditUseCase;
 use App\Application\UseCase\CreateClientUseCase;
 use App\Domain\Enum\CreditStatusEnum;
@@ -17,6 +15,8 @@ use App\Domain\Factory\CreditFactory;
 use App\Domain\Modificator\OstravaRateIncrease;
 use App\Domain\Rule\IncomeRule;
 use App\Domain\Rule\ScoreRule;
+use App\Domain\Service\Modificator;
+use App\Domain\Service\RuleChecker;
 use App\Infrastructure\Repository\JsonClientRepository;
 use App\Infrastructure\Repository\JsonCreditRepository;
 use App\Infrastructure\Service\NotificationService;

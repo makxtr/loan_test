@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Application\UseCase;
 
 use App\Application\DTO\CheckCreditDTO;
-use App\Application\Rule\RuleChecker;
 use App\Domain\Repository\ClientRepositoryInterface;
+use App\Domain\Service\RuleChecker;
 
 readonly class CheckCreditUseCase
 {

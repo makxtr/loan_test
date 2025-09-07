@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Rule;
+namespace App\Domain\Service;
 
 use App\Domain\Model\Client;
 use App\Domain\Model\Credit;

@@ -6,12 +6,12 @@ namespace Unit;
 
 use App\Application\DTO\CheckCreditDTO;
 use App\Application\DTO\ClientDTO;
-use App\Application\Rule\RuleChecker;
 use App\Application\UseCase\CheckCreditUseCase;
 use App\Application\UseCase\CreateClientUseCase;
 use App\Domain\Factory\ClientFactory;
 use App\Domain\Rule\IncomeRule;
 use App\Domain\Rule\ScoreRule;
+use App\Domain\Service\RuleChecker;
 use App\Infrastructure\Repository\JsonClientRepository;
 use PHPUnit\Framework\TestCase;
 

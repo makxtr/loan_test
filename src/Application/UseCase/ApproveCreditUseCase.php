@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Application\UseCase;
 
 use App\Application\DTO\ApproveCreditDTO;
-use App\Application\Rule\Modificator;
-use App\Application\Rule\RuleChecker;
 use App\Domain\Enum\CreditStatusEnum;
 use App\Domain\Factory\CreditFactory;
 use App\Domain\Repository\ClientRepositoryInterface;
 use App\Domain\Repository\CreditRepositoryInterface;
+use App\Domain\Service\Modificator;
+use App\Domain\Service\RuleChecker;
 use App\Infrastructure\Service\NotificationService;
 
 readonly class ApproveCreditUseCase

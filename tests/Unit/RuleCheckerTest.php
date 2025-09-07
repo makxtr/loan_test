@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Unit;
 
-use App\Application\Rule\RuleChecker;
 use App\Domain\Model\Client;
 use App\Domain\Rule\AgeRule;
 use App\Domain\Rule\IncomeRule;
 use App\Domain\Rule\PragueRejectRule;
 use App\Domain\Rule\RegionRule;
 use App\Domain\Rule\ScoreRule;
+use App\Domain\Service\RuleChecker;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
