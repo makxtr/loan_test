@@ -5,20 +5,29 @@ declare(strict_types=1);
 namespace App\Application\UseCase;
 
 use App\Application\DTO\ClientDTO;
-use App\Domain\Factory\ClientFactory;
+use App\Domain\Model\Client;
 use App\Domain\Repository\ClientRepositoryInterface;
 
 readonly class CreateClientUseCase
 {
     public function __construct(
-        private ClientRepositoryInterface $clientRepository,
-        private ClientFactory $clientFactory
+        private ClientRepositoryInterface $clientRepository
     ) {}
 
-    public function execute(ClientDTO $clientDTO): array
+    public function execute(ClientDTO $dto): array
     {
         try {
-            $client = $this->clientFactory->createFromDTO($clientDTO);
+            $client = new Client(
+                name: $dto->name,
+                age: $dto->age,
+                region: $dto->region,
+                income: $dto->income,
+                score: $dto->score,
+                pin: $dto->pin,
+                email: $dto->email,
+                phone: $dto->phone
+            );
+
             $this->clientRepository->add($client);
 
             return [

@@ -39,7 +39,7 @@ class ApproveCreditUseCaseTest extends TestCase
         $this->clientFactory = new ClientFactory();
         $this->clientRepository = new JsonClientRepository($this->clientStorageFile, $this->clientFactory);
         $this->creditRepository = new JsonCreditRepository($this->creditStorageFile, new CreditFactory());
-        $createClientUseCase = new CreateClientUseCase($this->clientRepository, $this->clientFactory);
+        $createClientUseCase = new CreateClientUseCase($this->clientRepository);
 
         $rules = [
             new ScoreRule(),
@@ -54,7 +54,6 @@ class ApproveCreditUseCaseTest extends TestCase
         $this->useCase = new ApproveCreditUseCase(
             $this->clientRepository,
             $this->creditRepository,
-            new CreditFactory(),
             $this->notificationService,
             $modificator,
             $ruleChecker
